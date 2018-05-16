@@ -1,0 +1,331 @@
+\documentclass[contract,10pt]{elsarticle}
+
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,stmaryrd,txfonts,dsfont}
+\usepackage{amsbsy}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage[all]{xy}
+\usepackage{tikz,tkz-graph}
+\usetikzlibrary{arrows,automata,positioning}
+\usetikzlibrary{trees,shapes,calc}
+%\usepackage{wrapfig,subfigure}
+%\usepackage{gastex}
+%\usepackage[strings]{underscore} % for correct handling of underscore in DOIs
+%\usepackage{undertilde}
+\usepackage{breakurl}
+\usepackage[ruled,vlined]{algorithm2e}
+
+%\setcounter{tocdepth}{3}
+%\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+%\noindent\keywordname\enspace\ignorespaces#1}
+%\newcommand{\mpar}[1]{\marginpar{#1}}
+%\newcommand{\qed}{$\square$}
+%=======================================================================
+\newtheorem{defi}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{theo}{Theorem}
+\newtheorem{prop}{Proposition}
+\newtheorem{lemm}{Lemma}
+\newtheorem{coro}{Corollary}
+\newtheorem{exam}{Example}
+%
+\newenvironment{definition}{\begin{defi} \rm }{\end{defi}}
+\newenvironment{theorem}{\begin{theo} \rm }{\end{theo}}
+\newenvironment{proposition}{\begin{prop} \rm }{\end{prop}}
+\newenvironment{lemma}{\begin{lemm} \rm }{\end{lemm}}
+\newenvironment{corollary}{\begin{coro} \rm }{\end{coro}}
+\newenvironment{example}{\begin{exam} \rm }{\end{exam}}
+\newenvironment{proof}{{\noindent \bfseries Proof.}}{\qed}
+
+
+%====================================================
+
+%\newcommand{\pf}{\noindent {\bf Proof. }}
+\newcommand{\leaveout}[1]{}
+
+\newcommand{\cl}{R^{*}}
+\newcommand{\ds}[1]{\lbrack \hspace{-0.6mm}\lbrack #1 \rbrack \hspace{-0.6mm}\rbrack}
+\newcommand{\ls}[1]{|\!|#1 |\!|}
+\newcommand{\mint}[2]{\int\!#1\,d #2}
+\newcommand{\com}{\bullet\!,}
+\newcommand{\vc}{\mbox{$\ \bigcirc\hspace{-3.5mm}\vee\ $}}
+\newcommand{\wc}{\mbox{$\ \bigcirc\hspace{-3.5mm}\wedge\ $}}
+\newcommand{\lift}[1]{\mathrel{{#1}^\dag}}
+\newcommand{\liftcl}[1]{\mathrel{{#1}^\circ}}
+
+%=================================
+\newcommand{\taolue}[1]{\color{green} {TL: #1 :LT} \color{black}}
+\newcommand{\tingting}[1]{{\color{red}TT: #1 :TT}}
+\newcommand{\hengyang}[1]{{\color{red}HY: #1 :HY}}
+\newcommand{\Y}[1]{{\color{blue}   #1}}
+\newcommand{\R}[1]{{\color{red}   #1}}
+
+
+%=================================
+
+
+%\def\br{\begin{re}}
+%	\def\bd{\begin{de}}
+%		\def\bt{\begin{th1}}
+%			\def\bl{\begin{lemma}}
+%				\def\bp{\begin{ppro}}
+%					\def\bx{\begin{exe}}
+%						\def\btl{\begin{tuilun}}
+%							\def\bc{\begin{center}}
+%								\def\bco{\begin{co}}
+%									\def\ed{\end{de}}
+%								\def\et{\end{th1}}
+%							\def\ep{\end{ppro}}
+%						\def\el{\end{lemma}}
+%					\def\ex{\end{exe}}
+%				\def\ec{\end{center}}
+%			\def\bi{\begin{itemize}}
+%				\def\ei{\end{itemize}}
+%			\def\eco{\end{co}}
+%		\def\er{\end{re}}
+	% MATH -----------------------------------------------------------
+	\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+	\newcommand{\abs}[1]{\left\vert#1\right\vert}
+%	\newcommand{\set}[1]{\left\{#1\right\}}
+	\newcommand{\Real}{\mathbb R}
+	\newcommand{\eps}{\varepsilon}
+%	\newcommand{\To}{\longrightarrow}
+	\newcommand{\BX}{\mathbf{B}(X)}
+	\newcommand{\A}{\mathcal{A}}
+	
+	% Sponsored Auction ----------------------------------------------
+	\newcommand{\bids}{\mathbf{b}}
+	\newcommand{\valueonpos}[1]{v_{#1}}
+	\newcommand{\bidonpos}[1]{b_{#1}}
+	\newcommand{\utility}[2]{u^{#1}_{#2}}
+	\newcommand{\dom}[1]{\text{dom}{#1}}
+	\newcommand{\ran}[1]{\text{ran}{#1}}
+	%\def\ez{\hfill $\Box$ \vspace{2mm}}
+	\newcommand{\nint}[2]{\int\!#1\,d #2}
+	\newcommand{\FB}{\mathit{FB}}
+	
+%====================================================================
+
+\begin{document}
+
+
+\begin{frontmatter}
+\title{Compositionality Metaresults of $\epsilon$-Bisimulations for Fuzzy Transition Systems} %\tnoteref{fund}}
+%\tnotetext[fund]{}
+\end{frontmatter}
+
+
+\begin{definition}(bisimulation) \label{bisimulation} Let $\cal {M}=(S,A,\rightarrow)$ be an FTS.
+
+\begin{itemize}
+
+\item A \R {symmetric} relation $R$ over $S$ is a \textit{pre}-bisimulation iff, whenever $(s,t)\in R$, then for all actions $a\in
+A$ and \underline{all $R$-closed sets $U$} it holds that for each $s\xrightarrow{a}\mu$ there exists
+$t\xrightarrow{a}\nu$ such that $\mu(U)=\nu(U)$. Two states $s$ and $t$ are pre-bisimilar, denoted as $s\sim^{pre} t$, if there is a pre-bisimulation $R$ that relates them.
+
+
+\item  A \R {symmetric} relation $R$ over $S$ is a \textit{post}-bisimulation iff, whenever $(s,t)\in R$, then for all actions $a\in
+A$ it holds that for each $s\xrightarrow{a}\mu$ there exists
+$t\xrightarrow{a}\nu$ such that $ \mu(U)=\nu(U)$ for \underline {all $R$-closed sets $U$}. Two states $s$ and $t$ are post-bisimilar, denoted as $s\sim^{post} t$, if there is a post-bisimulation $R$ that relates them.
+
+\end{itemize}
+
+\end{definition}
+
+\begin{definition} ($\epsilon$-Bisimulation)\label{approximate bisimulation}
+ Let $\cal {M}=(S,A,\rightarrow)$ be an FTS and $\epsilon\geq 0$.
+
+ \begin{itemize}
+
+\item A \R {symmetric}
+relation $R$ over $S$ is an $\epsilon$-pre-bisimulation iff, whenever $(s,t)\in R$, then for all actions $a\in
+A$ and \underline{all $R$-closed sets $U$} it holds that for each $s\xrightarrow{a}\mu$ there exists
+$t\xrightarrow{a}\nu$ such that $$|\mu(U)-\nu(U)|\leq \epsilon.$$ Two states  $s$ and $t$ are $\epsilon$-pre-bisimilar, denoted as $s\sim^{pre}_{\epsilon} t$, if there is an $\epsilon$-pre-bisimulation $R$ that relates them.
+
+\item A \R {symmetric}
+relation $R$ over $S$ is an $\epsilon$-post-bisimulation iff, whenever $(s,t)\in R$, then for all actions $a\in
+A$ and it holds that for each $s\xrightarrow{a}\mu$ there exists
+$t\xrightarrow{a}\nu$ such that $$|\mu(U)-\nu(U)|\leq \epsilon$$ for \underline {all $R$-closed sets $U$}. Two states  $s$ and $t$ are $\epsilon$-post-bisimilar, denoted as $s\sim^{post}_{\epsilon} t$, if there is an $\epsilon$-post-bisimulation $R$ that relates them.
+
+\end{itemize}
+\end{definition}
+
+For convenience, we appoint: when some properties  both hold for $\sim^{pre}$ and $\sim^{post}$, we use the symbol $\sim $; and some properties both hold for $\sim^{pre}_{\epsilon}$ and $\sim^{post}_{\epsilon}$, we use the symbol
+$\sim_{\epsilon}$.
+
+Clearly, $s\sim t$ iff $s\sim_{0} t$.
+
+\begin{proposition}  If $R$ is  an $\epsilon$-post-bisimulation, then $R$ is  an $\epsilon$-pre-bisimulation. Further, $\sim^{post}_{\epsilon}\subseteq \sim^{pre}_{\epsilon}$ for any $\epsilon$.
+\end{proposition}
+
+\begin{proposition}\label{property}
+
+ (1) $\sim_{\epsilon_1}\subseteq \sim_{\epsilon_2} $ whenever $\epsilon_1\leq \epsilon_2$;
+
+ (2)$s\sim_{\epsilon_1} s'$ and $s'\sim_{\epsilon_2} t$ then $s\sim_{\epsilon_1+\epsilon_2} t$;
+
+ (3)if $R_i$ is an $\epsilon_i$-bisimulation ($i=1,2$), then $R_1\circ R_2$ is $(\epsilon_1+\epsilon_2)$-bisimulation.
+
+\end{proposition}
+
+\begin{proposition}  $\sim_{\epsilon}$ is reflexive and symmetric, moreover it is the greatest $\epsilon$-bisimulation, that is
+$$
+\sim_{\epsilon}=\cup\{R\mid \mbox{$R$ is an $\epsilon$-bisimulation}\}
+$$
+\end{proposition}
+
+\R {Note that $\sim_{\epsilon}$ is not necessarily transive, i.e., it is not an equivalence relation. }
+
+
+Define:
+
+(1) $F^{pre}_{\epsilon}:2^{S\times S}\rightarrow 2^{S\times S}$ as follows:
+ \label{eq:defF}
+$$F^{pre}_{\epsilon}(R)=\left\{(s,t)\in S\times S \put(2,-11){\line(0,1){25.0}}
+\hspace{-0.2cm}\begin{array}{lll} &\mbox{for any $R$-closed set $U$}&\\
+&\forall s\xrightarrow{a} \mu,~\exists t\xrightarrow{a}\nu:~ |\mu(U)-\nu(U)|\leq \epsilon&\\
+&\forall t\xrightarrow{a} \nu,~\exists s\xrightarrow{a}\mu:~ |\mu(U)-\nu(U)|\leq \epsilon&\\
+\end{array}
+\right\}
+$$
+
+(2)$F^{post}_{\epsilon}:2^{S\times S}\rightarrow 2^{S\times S}$ as follows:
+ \label{eq:defF}
+$$F^{post}_{\epsilon}(R)=\left\{(s,t)\in S\times S \put(2,-11){\line(0,1){25.0}}
+\hspace{-0.2cm}\begin{array}{lll}
+&\forall s\xrightarrow{a} \mu,~\exists t\xrightarrow{a}\nu:~ |\mu(U)-\nu(U)|\leq \epsilon&\\
+&\mbox{for any $R$-closed set $U$}&\\
+&\forall t\xrightarrow{a} \nu,~\exists t\xrightarrow{a}\mu:~ |\mu(U)-\nu(U)|\leq \epsilon&\\
+&\mbox{for any $R$-closed set $U$}&
+
+\end{array}
+\right\}
+$$
+
+\begin{lemma} $F^{post}_{\epsilon}$ and $F^{pre}_{\epsilon}$ are both monotonic, i.e, $R_1\subseteq R_2$ implies that $F^{post}_{\epsilon}(R_1)\subseteq F^{post}_{\epsilon}(R_2)$ and $F^{pre}_{\epsilon}(R_1)\subseteq F^{pre}_{\epsilon}(R_2)$. Hence, $F^{post}_{\epsilon}$ and $F^{pre}_{\epsilon}$ have the least and the greatest fixed points.
+\end{lemma}
+
+\begin{lemma}  Let $\cal {M}=(S,A,\rightarrow)$ be finite branching. Then $F^{post}_{\epsilon}$ and $F^{pre}_{\epsilon}$ are both co-continuous. That is, let $R_{1}\supseteq R_2\supseteq \cdots$, then $F^{post}_{\epsilon}(\cap_{i\in I}R_i)=\cap_{i\in I}F^{post}_{\epsilon}(R_i)$ and $F^{pre}_{\epsilon}(\cap_{i\in I}R_i)=\cap_{i\in I}F^{pre}_{\epsilon}(R_i)$.
+\end{lemma}
+
+Let
+$$
+\begin{array}{lll}
+\sim^{0}_{\epsilon}&=& S\times S\\
+\sim^{n+1}_{\epsilon}&=&F_{\epsilon}(\sim^{n}_{\epsilon})\quad \mbox{for any $n$}\\
+\end{array}
+$$
+This definition  applies to $\sim^{pre}_{\epsilon}$ and $\sim^{post}_{\epsilon}$.
+
+\begin{proposition} Let $\cal {M}=(S,A,\rightarrow)$ be finite branching. Then $\sim^{pre}_{\epsilon}$ and  $\sim^{post}_{\epsilon}$  are the greatest fixed points of $F^{pre}_{\epsilon}$ and $F^{post}_{\epsilon}$, respectively.
+In other words, $F_{\epsilon}=\cap_{i\in N}\sim^{i}_{\epsilon}$ (here $F_{\epsilon}$ refers to $F^{pre}_{\epsilon}$ and $F^{post}_{\epsilon}$).
+
+\end{proposition}
+
+\begin{proof}
+Need to prove
+\end{proof}
+
+\begin{definition}\label{distance}
+
+(1)
+$$
+d_{pre}(s,t)=\inf\{\epsilon\mid s\sim^{pre}_{\epsilon} t\}.
+$$
+
+(2)
+$$
+d_{post}(s,t)=\inf\{\epsilon\mid s\sim^{post}_{\epsilon} t\}.
+$$
+
+\end{definition}
+
+\begin{proposition}$d_{pre}(s,t)\leq d_{post}(s,t)$. \end{proposition}
+
+\begin{proof} Since $s\sim^{post}_{\epsilon} t$ implies that $s\sim^{pre}_{\epsilon} t$, the set $\{\epsilon\mid s\sim^{post}_{\epsilon} t\}$ is a subset of the set of $\{\epsilon\mid s\sim^{pre}_{\epsilon} t\}$. Hence, $d_{pre}(s,t)\leq d_{post}(s,t)$ holds.
+\end{proof}
+
+The following theorem states that the infimum in Definition \ref{distance} of bisimulation
+distance can be replaced by minimum, that is, the infimum is achievable.
+
+\begin{theorem} \label {min}Let $\cal {M}=(S,A,\rightarrow)$ be finite branching. Then
+$$
+\begin{array}{lll}
+s&\sim^{post}_{d_{post}(s,t)}& t\\
+
+s&\sim^{pre}_{d_{pre}(s,t)}& t
+\end{array}
+$$
+ \end{theorem}
+\begin{proof}
+It suffices to prove that
+$$
+ \begin{aligned}
+ R=\{(s,t)\mid s\sim_{\epsilon_{i}} t~&\mbox{for some decreasing sequence}\\
+ & \epsilon_1> \epsilon_2>\cdots>0, \mbox{and} \lim_{i\rightarrow \infty}\epsilon_i=\epsilon\}
+\end{aligned}
+$$
+is an $\epsilon$-bisimulation. We choose to prove $s\sim^{post}_{d_{post}(s,t)} t$.
+
+First, the symmetry of $R$ is obvious.
+
+
+Second, it is easy to see that
+$$
+R=\bigcap_{k\in N}\sim^{post}_{\epsilon_{k}}
+$$
+where $\sim^{post}_{\epsilon_{1}}\supseteq \sim^{post}_{\epsilon_{2}}\supseteq \cdots$. Since the state space is finite, there is only finite the relation  $\sim^{post}_{\epsilon_{k}}$. Hence there exists $i_0$ such that
+$R=\bigcap_{k\in N}\sim^{post}_{\epsilon_{k}}=\sim^{post}_{\epsilon_{i_0}}=\sim^{post}_{\epsilon_{i_0+1}}\cdots$. That is, $R$ is $\epsilon_{j}(j\geq i_0)$-post-bisimulation. Let $(s,t)\in R$ and $s\xrightarrow{a}\mu$  Hence there exists $t\xrightarrow a\nu_{j}$ ($j\geq i_0$) such that the following holds:
+$$
+|\mu(U)-\nu_{j}(U)|\leq \epsilon_j
+$$
+for all $R$-closed sets $U$. Note that $U$ is $\sim^{post}_{\epsilon_{i_0}}$-closed ($j\geq i_0$) too. Finite branching condition implies that a distribution $\nu$ exists such that 
+$$
+|\mu(U)-\nu(U)|\leq \epsilon_k
+$$
+for infinite $\epsilon_k$ ($k\geq i_0$). Hence
+$$
+|\mu(U)-\nu(U)|\leq \inf_{k}\epsilon_k
+$$
+That is, $|\mu(U)-\nu(U)|\leq  \epsilon$. This shows that $R$ is an $\epsilon$-post-bisimulation. The proof is completed. 
+\end{proof}
+
+
+
+\begin{proposition} $d(s,t)$ is a pseudometric, that is
+
+(1) $d(s,s)=0$;
+
+(2)$d(s,t)=d(t,s)$;
+
+(3)$d(s,t)\leq d(s,s')+d(s',t)$.
+
+\end{proposition}
+
+\begin{proof} (1) and (2) are obvious, we prove (3).
+Let $d(s,s')=\lambda_1$ and $d(s',t)=\lambda_2$. Then for any $\epsilon>0$, there exist $a$ and $b$ such that $s\sim_{a} s'$ and $s'\sim_{b} t$, moreover $a<\lambda_1+\frac{\epsilon}{2}$ and $b<\lambda_2+\frac{\epsilon}{2}$.
+Then, the definition of $d$ implies that $s\sim_{\lambda_1+\frac{\epsilon}{2}} s'$ and $s'\sim_{\lambda_2+\frac{\epsilon}{2}} t$. Further, by Proposition \ref{property} (2), we have $s\sim_{\lambda_1+\lambda_2+\epsilon} t$.
+Hence, $d(s,t)\leq \lambda_1+\lambda_2+\epsilon$. Since $\epsilon$ is arbitrary, $d(s,t)\leq \lambda_1+\lambda_2$ holds. That is, $d(s,t)\leq d(s,s')+d(s',t)$.
+
+
+\end{proof}
+
+\begin{proposition} $d(s,t)=0$ iff $s$ and $t$ are bisimilar. \end{proposition}
+\begin{proof}
+First, by Theorem \ref{min}, $d(s,t)=0$ implies that $s\sim_{0} t$, i.e., $s$ and $t$ are bisimilar. The inverse direction is straightforward.
+\end{proof}
+
+\vskip1cm
+
+\R {Question: how to compute $d_{pre}(s,t)$ and $d_{post}(s,t)$}
+
+
+
+
+\end{document}
